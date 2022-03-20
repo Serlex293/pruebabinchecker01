@@ -16,7 +16,7 @@ if($message == "/start"){
 }
 
 //Bin Lookup
-if(strpos($message, ".bin") === 0){
+if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
     $bin = substr($message, 5);
     $curl = curl_init();
     curl_setopt_array($curl, [
@@ -25,7 +25,7 @@ if(strpos($message, ".bin") === 0){
     CURLOPT_FOLLOWLOCATION => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 40,
-    CURLOPT_TIMEOUT => 10,
+    CURLOPT_TIMEOUT => 20,
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => [
