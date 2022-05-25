@@ -16,11 +16,11 @@ if($message == "/start"){
 }
 
 //Bin Lookup
-if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
+if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0 || strpos($message, "bin ") === 0){
     $bin = substr($message, 5);
     $curl = curl_init();
     curl_setopt_array($curl, [
-    CURLOPT_URL => "https://binsu-api.vercel.app/api/".$bin,
+    CURLOPT_URL => "https://bin-check-dr4g.herokuapp.com/api/".$bin,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_FOLLOWLOCATION => true,
     CURLOPT_ENCODING => "",
@@ -33,7 +33,7 @@ if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
     "accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
     "sec-fetch-dest: document",
     "sec-fetch-site: none",
-    "user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+    "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36"
    ],
    ]);
 
