@@ -16,7 +16,7 @@ if($message == "/start"){
 }
 
 //Bin Lookup
-if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0 || strpos($message, "bin ") === 0){
+if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
     $bin = substr($message, 5);
     $curl = curl_init();
     curl_setopt_array($curl, [
@@ -66,7 +66,15 @@ if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0 || strpos($
             }
 
     if ($result1 == true) {
-    send_message($chat_id,$message_id,"***VALID BIN✅%0A┏━━━━━━━━━━━━━━━━━━%0A┠⌬ BIN: <code>$bin</code>%0A┠⌬ Brand: $brand%0A┠⌬ Level: $level%0A┠⌬ Bank: $bank%0A┠⌬ Country: $country $flag%0A┠⌬ Type: $type%0A┗━━━━━━━━━━━━━━━━━━***");
+    send_message($chat_id,$message_id,"***VALID BIN✅
+    ┏━━━━━━━━━━━━━━━━━━
+    ┠⌬ BIN: <code>$bin</code>
+    ┠⌬ Brand: $brand
+    ┠⌬ Level: $level
+    ┠⌬ Bank: $bank
+    ┠⌬ Country: $country $flag
+    ┠⌬ Type: $type
+    ┗━━━━━━━━━━━━━━━━━━***");
     }
 else {
     send_message($chat_id,$message_id, "***INVALID BIN❌***");
