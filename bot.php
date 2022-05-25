@@ -13,7 +13,7 @@
     $start_msg = $_ENV['START_MSG']; 
 
 if($message == "/start"){
-    send_message($chat_id,$message_id, "***Hola $firstname \nUsa .bin xxxxxx Para Checkar Tu BIN \n$start_msg***");
+    send_message($chat_id,$message_id, "<i><b>Hola $firstname \nUsa .bin xxxxxx Para Checkar Tu BIN \n$start_msg</b></i>");
 }
 
 //Bin Lookup
@@ -67,18 +67,10 @@ if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
             }
 
     if ($result1 == true) {
-    send_message($chat_id,$message_id,"***VALID BIN✅
-    ┏━━━━━━━━━━━━━━━━━━
-    ┠⌬ BIN: <code>$bin</code>
-    ┠⌬ Brand: $brand
-    ┠⌬ Level: $level
-    ┠⌬ Bank: $bank
-    ┠⌬ Country: $country $flag
-    ┠⌬ Type: $type
-    ┗━━━━━━━━━━━━━━━━━━***");
+    send_message($chat_id,$message_id,"<b>VALID BIN✅%0A┏━━━━━━━━━━━━━━━━%0A┠⌬ BIN: <code>$bin</code>%0A┠⌬ Brand: $brand┠⌬ Level: $level%0A┠⌬ Bank: $bank%0A┠⌬ Country: $country $flag%0A┠⌬ Type: $type%0A┗━━━━━━━━━━━━━━━━</b>");
     }
 else {
-    send_message($chat_id,$message_id, "***INVALID BIN❌***");
+    send_message($chat_id,$message_id, "<b>INVALID BIN❌</b>");
 }
 }
     function send_message($chat_id,$message_id, $message){
