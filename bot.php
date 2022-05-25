@@ -1,5 +1,5 @@
 <?php
-    date_default_timezone_set("Asia/kolkata");
+    date_default_timezone_set("America/Buenos_Aires");
     //Data From Webhook
     $content = file_get_contents("php://input");
     $update = json_decode($content, true);
@@ -16,7 +16,7 @@ if($message == "/start"){
 }
 
 //Bin Lookup
-if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
+if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0 || strpos($message, "bin ") === 0){
     $bin = substr($message, 5);
     $curl = curl_init();
     curl_setopt_array($curl, [
@@ -66,19 +66,10 @@ if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
             }
 
     if ($result1 == true) {
-    send_message($chat_id,$message_id,"***VALID BIN✅
-┏━━━━━━━━━━━━━━━━━━
-┠⌬ BIN: $bin
-┠⌬ Brand: $brand
-┠⌬ Level: $level
-┠⌬ Bank: $bank
-┠⌬ Country: $country $flag
-┠⌬ Type: $type
-┗━━━━━━━━━━━━━━━━━━
-〄  Checked By: @$username ***");
+    send_message($chat_id,$message_id,"***VALID BIN✅%0A┏━━━━━━━━━━━━━━━━━━%0A┠⌬ BIN: <code>$bin</code>%0A┠⌬ Brand: $brand%0A┠⌬ Level: $level%0A┠⌬ Bank: $bank%0A┠⌬ Country: $country $flag%0A┠⌬ Type: $type%0A┗━━━━━━━━━━━━━━━━━━***");
     }
 else {
-    send_message($chat_id,$message_id, "***Oye negro, métete tu bin por el culo no me sirve❌***");
+    send_message($chat_id,$message_id, "***INVALID BIN❌***");
 }
 }
     function send_message($chat_id,$message_id, $message){
