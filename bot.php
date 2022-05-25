@@ -68,14 +68,14 @@ if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
 
     if ($result1 == true) {
     send_message($chat_id,$message_id,"<b>VALID BIN✅
-    ┏━━━━━━━━━━━━━━━━
-    ┠⌬ BIN: <code>$bin</code>
-    ┠⌬ Brand: $brand
-    ┠⌬ Level: $level
-    ┠⌬ Bank: $bank
-    ┠⌬ Country: $country $flag
-    ┠⌬ Type: $type
-    ┗━━━━━━━━━━━━━━━━</b>");
+┏━━━━━━━━━━━━━━━━
+┠⌬ BIN: <code>$bin</code>
+┠⌬ Brand: $brand
+┠⌬ Level: $level
+┠⌬ Bank: $bank
+┠⌬ Country: $country $flag
+┠⌬ Type: $type
+┗━━━━━━━━━━━━━━━━</b>");
     }
 else {
     send_message($chat_id,$message_id, "<b>INVALID BIN❌</b>");
