@@ -1,90 +1,58 @@
-
 <?php
-    date_default_timezone_set("America/Buenos_Aires");
-    //Data From Webhook
-    $content = file_get_contents("php://input");
-    $update = json_decode($content, true);
-    $chat_id = $update["message"]["chat"]["id"];
-    $message = $update["message"]["text"];
-    $message_id = $update["message"]["message_id"];
-    $id = $update["message"]["from"]["id"];
-    $username = $update["message"]["from"]["username"];
-    $firstname = $update["message"]["from"]["first_name"];
-    $start_msg = $_ENV['START_MSG']; 
 
-if($message == "/start"){
-    send_message($chat_id,$message_id, "<i><b>Hola $firstname \nUsa .bin xxxxxx Para Checkar Tu BIN \n$start_msg</b></i>");
+//=======[Webhook]========https://api.telegram.org/bot5325109280:AAETUhRv_03rkKwZQOYT4TD0WmK3DtMRFMk/setwebhook?url=https://04f0-45-231-34-36.ngrok.io/main.php
+
+//================[Telegram BOT API TOKEN ]================//
+$botToken = "5350020794:AAHoCUF-tHSpK7gannjVrfLpZhm_yKJE2_Y"; #<------------------- PUT YOUR TOKEN HERE------------->#
+$website = "https://api.telegram.org/bot".$botToken;
+    error_reporting(0);
+$update = file_get_contents('php://input');
+$update = json_decode($update, TRUE);
+$print = print_r($update);
+$cdata2 = $update["callback_query"]["data"];
+$caption = $update["message"]["from"]["chat"]["caption"];
+$chatId = $update["message"]["chat"]["id"]; 
+$userId = $update["message"]["from"]["id"];
+$firstname = $update["message"]["from"]["first_name"];
+$username = $update["message"]["from"]["username"];
+$message = $update["message"]["text"];
+$message_id = $update["message"]["message_id"];
+$mention = '<a href="tg://user?id='.$userId.'">'.$firstname.'</a>';
+$mention1 = '<a href="tg://user?id=1219059028">𝙎𝙚𝙧𝙡𝙚𝙭</a>';
+$type = $update["message"]["chat"]["type"];
+$rand = rand(1,100);
+$chatid2 = $update["callback_query"]["message"]["chat"]["id"];
+$message_id2 = $update["callback_query"]["message"]["message_id"];
+$data = $update["callback_query"]["data"];
+$userId = $update["message"]["from"]["id"]; 
+$firstname = $update["message"]["from"]["first_name"]; 
+$username = $update["message"]["from"]["username"]; 
+$message = $update["message"]["text"]; 
+$message_id = $update["message"]["message_id"]; 
+$r_userId = $update["message"]["reply_to_message"]["from"]["id"];  
+$r_firstname = $update["message"]["reply_to_message"]["from"]["first_name"];  
+$r_username = $update["message"]["reply_to_message"]["from"]["username"]; 
+$r_msg_id = $update["message"]["reply_to_message"]["message_id"]; 
+$mentionrp = '<a href="tg://user?id='.$r_userId.'">'.$r_firstname.'</a>'; 
+
+//[GATES]//
+
+foreach(glob("gates/*.php") as $filename){
+include $filename;
 }
 
-//Bin Lookup
-if(strpos($message, ".bin") === 0 || strpos($message, "/bin ") === 0){
-    $bin = substr($message, 5);
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-    CURLOPT_URL => "https://bin-check-dr4g.herokuapp.com/api/".$bin,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 40,
-    CURLOPT_TIMEOUT => 20,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => [
-    "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-    "sec-fetch-dest: document",
-    "sec-fetch-site: none",
-    "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36"
-   ],
-   ]);
+//[CMDS]//
 
- $result = curl_exec($curl);
- curl_close($curl);
- $data = json_decode($result, true);
- $bank = $data['data']['bank'];
- $country = $data['data']['country'];
- $brand = $data['data']['vendor'];
- $level = $data['data']['level'];
- $type = $data['data']['type'];
- $flag = $data['data']['countryInfo']['emoji'];
- $result1 = $data['result'];
-
-            if (empty($level)) {
-            	$level = "UNAVAILABLE";
-            }
-
-            if (empty($typename)) {
-            	$typename = "UNAVAILABLE";
-            }
-            if (empty($brand)) {
-            	$brand = "UNAVAILABLE";
-            }
-            if (empty($bank)) {
-            	$bank = "UNAVAILABLE";
-            }
-            if (empty($bname)) {
-            	$bname = "UNAVAILABLE";
-            }
-
-    if ($result1 == true) {
-    send_message($chat_id,$message_id,"<b>VALID BIN✅
-┏━━━━━━━━━━━━━━━━
-┠⌬ BIN: <code>$bin</code>
-┠⌬ Brand: $brand
-┠⌬ Level: $level
-┠⌬ Bank: $bank
-┠⌬ Country: $country $flag
-┠⌬ Type: $type
-┗━━━━━━━━━━━━━━━━</b>");
-    }
-else {
-    send_message($chat_id,$message_id, "<b>INVALID BIN❌</b>");
+foreach(glob("tools/*.php") as $filename){
+include $filename;
 }
+
+//================[FUNCTION]==================//
+
+function sendMessage ($chatId,$message_id, $message){
+$url = $GLOBALS[website]."/sendMessage?chat_id=".$chatId."&text=".$message."&reply_to_message_id=".$message_id."&parse_mode=HTML";
+file_get_contents($url);
 }
-    function send_message($chat_id,$message_id, $message){
-        $text = urlencode($message);
-        $apiToken = $_ENV['API_TOKEN'];  
-        file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?chat_id=$chat_id&reply_to_message_id=$message_id&text=$text&parse_mode=HTML");
-    }
+
+
 ?>
-     
